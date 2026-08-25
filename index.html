@@ -16,6 +16,53 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
+<style>
+  .brand-lockup {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:inherit;
+    min-width:250px;
+  }
+  .brand-lockup img {
+    width:42px;
+    height:56px;
+    object-fit:contain;
+    flex:none;
+  }
+  .brand-copy {
+    display:flex;
+    flex-direction:column;
+    line-height:1;
+  }
+  .brand-name {
+    font-family:'Fraunces',serif;
+    font-size:25px;
+    letter-spacing:-.02em;
+  }
+  .brand-name em { font-style:italic; font-weight:400; }
+  .brand-tagline {
+    margin-top:6px;
+    font-family:'Inter',sans-serif;
+    font-size:8px;
+    line-height:1.35;
+    letter-spacing:.075em;
+    text-transform:uppercase;
+    color:rgba(22,36,29,.62);
+    white-space:nowrap;
+  }
+  @media (max-width: 900px) {
+    .brand-lockup { min-width:0; }
+    .brand-tagline { white-space:normal; max-width:210px; }
+    .nav-phone { display:none; }
+  }
+  @media (max-width: 640px) {
+    .brand-lockup img { width:34px; height:48px; }
+    .brand-name { font-size:21px; }
+    .brand-tagline { font-size:7px; max-width:170px; margin-top:5px; }
+  }
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -45,7 +92,13 @@
 
 <header>
   <div class="nav">
-    <div class="logo">Una <em>Home</em></div>
+    <a href="index.html" class="brand-lockup" aria-label="Una Home — High-standard Cleaning Services in South West London">
+      <img src="assets/una-logo.png" alt="Una Home logo">
+      <span class="brand-copy">
+        <span class="brand-name">Una <em>Home</em></span>
+        <span class="brand-tagline">High-standard Cleaning Services in South West London</span>
+      </span>
+    </a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="about.html">About</a></li>
@@ -370,22 +423,16 @@
 
   enquiryForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-
     submitButton.disabled = true;
     const originalButtonText = submitButton.textContent;
     submitButton.textContent = 'Sending…';
-
     try {
       const response = await fetch(enquiryForm.action, {
         method: 'POST',
         body: new FormData(enquiryForm),
         headers: { 'Accept': 'application/json' }
       });
-
-      if (!response.ok) {
-        throw new Error('Form submission failed');
-      }
-
+      if (!response.ok) throw new Error('Form submission failed');
       formFields.style.display = 'none';
       formSuccess.style.display = 'block';
     } catch (error) {
