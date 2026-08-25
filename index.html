@@ -23,7 +23,7 @@
   "name": "Una Home",
   "description": "Insured, experienced housekeeping for South West London homes: regular cleaning, deep cleaning, in-home ironing & laundry, and general housekeeping.",
   "url": "https://www.unahome.co.uk/",
-  "telephone": "+44-20-3000-0000",
+  "telephone": "+44-7538-211423",
   "priceRange": "££",
   "areaServed": ["Chelsea","Kensington","Fulham","Wandsworth","Battersea","Clapham","Putney","Barnes","Wimbledon","Richmond"],
   "openingHoursSpecification": {
@@ -54,7 +54,7 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-cta">
-      <span class="nav-phone">020 3XXX XXXX</span>
+      <span class="nav-phone">07538 211423</span>
       <a href="#contact" class="btn btn-ghost">Request a quote</a>
     </div>
   </div>
@@ -281,44 +281,49 @@
       <h2 style="margin-top:18px;">Request a bespoke quote.</h2>
       <p>Tell us a little about your home and what you need — we'll come back with a considered plan, not a generic price list.</p>
       <ul class="contact-list">
-        <li><span>Phone</span><span>020 3XXX XXXX</span></li>
+        <li><span>Phone</span><span>07538 211423</span></li>
         <li><span>Email</span><span>hello@unahome.co.uk</span></li>
         <li><span>Hours</span><span>Mon–Sat, 7am–7pm</span></li>
         <li><span>Coverage</span><span>SW London</span></li>
       </ul>
     </div>
-    <form class="form reveal" onsubmit="event.preventDefault(); this.querySelector('.form-success').style.display='block'; this.querySelector('.form-fields').style.display='none';">
+    <form class="form reveal" action="https://formspree.io/f/xvkpeqqq" method="POST">
       <div class="form-fields">
         <div class="form-row">
           <div>
             <label for="name">Name</label>
-            <input id="name" type="text" required>
+            <input id="name" name="name" type="text" autocomplete="name" required>
           </div>
           <div>
             <label for="area">Area / postcode</label>
-            <input id="area" type="text" placeholder="e.g. Chelsea, SW3">
+            <input id="area" name="area" type="text" autocomplete="postal-code" placeholder="e.g. Chelsea, SW3">
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label for="phone">Phone</label>
-            <input id="phone" type="tel">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
           </div>
           <div>
-            <label for="service">Service of interest</label>
-            <select id="service">
-              <option>Regular cleaning</option>
-              <option>Deep cleaning</option>
-              <option>In-home ironing &amp; laundry</option>
-              <option>General housekeeping</option>
-              <option>Not sure yet</option>
-            </select>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel">
           </div>
         </div>
         <div>
-          <label for="message">A little about your home</label>
-          <textarea id="message" placeholder="Property size, current arrangement, what you're looking for..."></textarea>
+          <label for="service">Service of interest</label>
+          <select id="service" name="service">
+            <option>Regular cleaning</option>
+            <option>Deep cleaning</option>
+            <option>In-home ironing &amp; laundry</option>
+            <option>General housekeeping</option>
+            <option>Not sure yet</option>
+          </select>
         </div>
+        <div>
+          <label for="message">A little about your home</label>
+          <textarea id="message" name="message" placeholder="Property size, current arrangement, what you're looking for..."></textarea>
+        </div>
+        <input type="hidden" name="_subject" value="New Una Home website enquiry">
         <button type="submit" class="btn btn-primary" style="margin-top:6px;">Request a quote</button>
       </div>
       <div class="form-success" style="display:none; font-family:'Fraunces',serif; font-style:italic; font-size:18px; padding:30px 0;">
@@ -357,6 +362,38 @@
     });
   }, { threshold: 0.2 });
   document.querySelectorAll('.reveal, .ledger-row').forEach(el=> io.observe(el));
+
+  const enquiryForm = document.querySelector('.form');
+  const formFields = enquiryForm.querySelector('.form-fields');
+  const formSuccess = enquiryForm.querySelector('.form-success');
+  const submitButton = enquiryForm.querySelector('button[type="submit"]');
+
+  enquiryForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    submitButton.disabled = true;
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = 'Sending…';
+
+    try {
+      const response = await fetch(enquiryForm.action, {
+        method: 'POST',
+        body: new FormData(enquiryForm),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (!response.ok) {
+        throw new Error('Form submission failed');
+      }
+
+      formFields.style.display = 'none';
+      formSuccess.style.display = 'block';
+    } catch (error) {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+      alert('Sorry, we could not send your enquiry. Please try again or email hello@unahome.co.uk.');
+    }
+  });
 </script>
 
 </body>
