@@ -449,3 +449,11 @@
 .result-slot .slot-placeholder{ text-align:center; padding:0 16px; font-size:12.5px; color:rgba(22,36,29,0.5); }
 .result-caption{ padding:16px 20px; font-size:14px; color:rgba(22,36,29,0.7); border-top:1px solid var(--line); }
 @media (max-width:760px){ .results-grid{ grid-template-columns:1fr; } }
+
+/* Services ledger: title sits next to the tick; link sits under the description */
+.ledger-title{ display:flex; align-items:center; gap:12px; }
+.ledger-title .tick{ flex-shrink:0; }
+.ledger-desc p:first-child{ margin-top:0; }
+.ledger-desc p + p{ margin-top:14px !important; }
+@media (max-width:760px){ .ledger-row .ledger-desc{ grid-column:2; } }
+@media (max-width:760px){ .ledger-head-row{ display:none; } }
