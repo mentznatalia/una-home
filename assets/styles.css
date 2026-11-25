@@ -242,7 +242,7 @@
   }
   .why-card{
     background:var(--stone); padding:38px 32px; min-height:210px;
-    display:flex; flex-direction:column; justify-content:space-between;
+    display:flex; flex-direction:column; justify-content:flex-start;
   }
   .why-card .mark{ color:var(--brass); font-family:'Fraunces',serif; font-style:italic; font-size:15px; }
   .why-card h3{ font-size:19px; margin-top:22px; }
