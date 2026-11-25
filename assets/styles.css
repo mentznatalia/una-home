@@ -467,3 +467,7 @@
 .ledger-desc p + p{ margin-top:14px !important; }
 @media (max-width:760px){ .ledger-row .ledger-desc{ grid-column:2; } }
 @media (max-width:760px){ .ledger-head-row{ display:none; } }
+
+/* Testimonials: two-card layout + star rating */
+.testi .stars{ color:var(--brass); letter-spacing:3px; font-size:16px; margin-bottom:14px; }
+@media (min-width:901px){ .testi-grid.two{ grid-template-columns:repeat(2,1fr); } }
