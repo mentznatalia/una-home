@@ -144,6 +144,16 @@
     position:relative;
     overflow:hidden;
   }
+  /* Hero background photo: add your image as assets/hero.jpg.
+     opacity = how strong the photo is (0.2 = 20%); blur = how soft it looks. */
+  .hero::before{
+    content:"";
+    position:absolute; inset:-24px;
+    background:url('hero.jpg') center / cover no-repeat;
+    opacity:0.2;
+    filter:blur(4px);
+    pointer-events:none;
+  }
   .hero::after{
     content:"";
     position:absolute; inset:0;
